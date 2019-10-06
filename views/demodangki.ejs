@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        .errorClass {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!--START NAVIGATION BAR-->
+
+    <!--END NAVIGATION BAR-->
+
+    <!--START BODY-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+                <!-- List Group -->
+                <div class="list-group">
+                    <!--Poster index here!!!-->
+                    <div class="index-poster">
+                        <br><br><br>
+                        <a href="#"><img src="https://www.gapo.vn/assets/images/group-auth.svg" alt="index-poster"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <br>
+                <div class="something">
+                    <div class="form-header">
+                        <h3 class="form-header-h3">Đăng nhập</h3>
+                    </div>
+                    <div class="form">
+                        <form>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i class="far fa-user"></i> </span>
+                                </div>
+                                <input id="usernameLogin" name="username" class="form-control" placeholder="Tài khoản"
+                                    type="username">
+                            </div> <!-- form-group// -->
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                </div>
+                                <input id="passwordLogin" name="password" class="form-control" placeholder="Mật khẩu"
+                                    type="password">
+                            </div> <!-- form-group// -->
+                            <i id="errorsLogin" style="color: red">
+
+                            </i>
+                            <div class="form-group">
+                                <button id="submitLogin" type="submit" class="btn btn-success btn-block"> Đăng nhập
+                                </button>
+                            </div> <!-- form-group// -->
+                        </form>
+                    </div>
+                </div>
+                <div class="something">
+                    <br><br>
+
+
+                    <!-- Form Register -->
+                    <div class="form-header">
+                        <h3 class="form-header-h3">Đăng ký</h3>
+                    </div>
+                    <div class="form">
+                        <form>
+                            <div class="form-body">
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="far fa-user"></i> </span>
+                                    </div>
+                                    <input id="username" class="form-control" placeholder="Tên tài khoản"
+                                        type="username">
+                                </div> <!-- form-group// -->
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                    </div>
+                                    <input id="password" class="form-control" placeholder="Mật khẩu" type="password">
+                                </div> <!-- form-group// -->
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                                    </div>
+                                    <input id="password2" class="form-control" placeholder="Nhập lại mật khẩu"
+                                        type="password">
+                                </div> <!-- form-group// -->
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                    </div>
+                                    <input id="fullname" name="" class="form-control" placeholder="Tên đầy đủ"
+                                        type="text">
+                                </div> <!-- form-group// -->
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                                    </div>
+                                    <input id="email" name="" class="form-control" placeholder="Email address"
+                                        type="email">
+                                </div> <!-- form-group// -->
+                                <ul id="errors">
+
+                                </ul>
+                                <div class="form-group">
+                                    <button id="submit-form" type="submit" class="btn btn-success btn-block"> Tạo tài
+                                        khoản </button>
+                                </div> <!-- form-group// -->
+                            </div>
+                            <!-- Show errors -->
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END BODY-->
+    <script>
+        $(document).ready(function () {
+            $('#submit-form').on('click', function (e) {
+                e.preventDefault();
+
+                let username = $('#username').val();
+                let password = $('#password').val();
+                let password2 = $('#password2').val();
+                let fullname = $('#fullname').val();
+                let email = $('#email').val();
+                $.ajax({
+                    url: '/register',
+                    method: 'POST',
+                    data: {
+                        username,
+                        password,
+                        password2,
+                        fullname,
+                        email
+                    },
+                    success: function (resp) {
+                        console.log(resp);
+                        if (resp.length == 0) {
+                            alert('Dang ki thanh cong');
+                            window.location = "http://localhost:3000/register"
+                        }
+                        $('#errors').html('')
+                        resp.forEach(item => {
+                            $('#errors').append(`<li class="errorClass"><i>${item}</i></li>`)
+                        })
+                    }, error: function (err) {
+                        console.log({ message: err.message });
+                    }
+                })
+            })
+
+            $('#submitLogin').on('click', function (e) {
+                e.preventDefault();
+                let usernameLogin = $('#usernameLogin').val();
+                let passwordLogin = $('#passwordLogin').val();
+
+                $.ajax({
+                    url: '/login',
+                    method: 'POST',
+                    data: {
+                        usernameLogin,
+                        passwordLogin
+                    },
+                    success: function (resp) {
+                        $('#errorsLogin').html(resp)
+                        if(resp.redirect &&  typeof(resp.redirect==String)){
+                            window.location= resp.redirect
+                        }
+                    //     if typeof data.redirect == 'string'
+                    // window.location = data.redirect
+                    },
+                    error: function (err) {
+                        console.log({ message: err.message });
+                    }
+                })
+            })
+        })
+
+    </script>
+</body>
+
+</html>
